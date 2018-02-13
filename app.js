@@ -42,7 +42,7 @@ app.get('/register', function(req, res) {
 });
 
 app.post('/register', function(req, res) {
-    User.register(new User({username: req.body.user}), req.body.pass, function(err, user){
+    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
         if(err){
             console.log(err);
             return res.render('register');
@@ -60,11 +60,7 @@ app.get('/login', function(req, res) {
 app.post('/login', passport.authenticate('local', {
         successRedirect: '/secret',
         failureRedirect: '/login'}), function(req, res) {
-    
 });
-
-
-
 
 app.listen(PORT, function(){
     console.log(__dirname + ' listening on port ' + PORT + '...');
