@@ -8,12 +8,14 @@ var express = require('express'),
     localStrategy = require('passport-local'),
     passportLocalMongoose = require('passport-local-mongoose');
 
+// App config
 var PORT = 3000;
-
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+mongoose.connect('mongodb://localhost/simpleAuth');
 
+// Auth / Passport config
 app.use(require('express-session')({
     secret: 'this is not a dog',
     resave: false,
@@ -27,8 +29,8 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-mongoose.connect('mongodb://localhost/simpleAuth');
 
+// ROUTES 
 app.get('/', function(req, res) {
     res.render('home');
 });
